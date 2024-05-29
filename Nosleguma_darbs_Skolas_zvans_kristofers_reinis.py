@@ -17,4 +17,24 @@ image_zvans = Image.open("zvans.png")
 tkimage = ImageTk.PhotoImage(image_zvans)
 image_izvada = canva.create_image(280, 250, image=tkimage)
 
+#zvana animacija
+def animacija(angle=0, direction=1):
+    global tkimage
+    
+    rotated_image = image_zvans.rotate(angle)
+    tkimage = ImageTk.PhotoImage(rotated_image)
+    
+    canva.itemconfig(image_izvada, image=tkimage)
+    
+    if direction == 1:
+        new_angle = angle + 5
+        if new_angle >= 45:
+            direction = -1
+    else:
+        new_angle = angle - 5
+        if new_angle <= -45:
+            direction = 1
+    
+    logs.after(50, animacija, new_angle, direction)
+
 canva.mainloop()
