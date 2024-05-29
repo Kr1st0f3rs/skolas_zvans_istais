@@ -3,7 +3,7 @@ from tkinter import *
 from PIL import Image, ImageTk
 from tkinter.ttk import *
 from time import strftime
-
+import playsound
 
 Garums = 700
 Platums = 800
@@ -50,5 +50,49 @@ lbl = Label(canva, font=('calibri', 40, 'bold'),
 
 lbl.place(x=220, y=580)
 
+def audio():
+    playsound.playsound("zvans.mp3")
+    
+
+
+def stundu_zvans():
+    string = strftime('%H:%M:%S')
+    if string <= "08:00" or string >="16:31":
+        pass
+    elif string <= "08:10" or string >= "08:50":
+        audio()
+    elif string <="9:10" or string >="9:50":
+        audio()
+    elif string <="10:00" or string >="10:40":
+        audio()
+    elif string <="10:50" or string >="11:30":
+        audio()
+    elif string <="11:40" or string >="12:20":
+        audio()
+    elif string <="12:30" or string >="13:10":
+        audio()
+    elif string <="13:20" or string >="14:00":
+        audio()
+    elif string <="14:10" or string >="14:50":
+        audio()
+    elif string <="15:00" or string >="15:40":
+        audio()
+    elif string <="15:50" or string >="16:30":
+        audio()
+    
+
+i=0
+def check_time():
+    global i, stundu_zvans
+    if i < 3:
+        stundu_zvans()
+        i+=1
+        logs.after(1000, check_time)
+    else:
+        pass
+
 update_time()
-canva.mainloop()
+logs.after(1000, check_time)
+if i > 0 and i<4:
+    animacija()
+logs.mainloop()
