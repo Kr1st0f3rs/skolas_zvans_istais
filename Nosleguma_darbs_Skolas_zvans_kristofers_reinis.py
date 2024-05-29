@@ -2,7 +2,7 @@ import tkinter as Tk
 from tkinter import *
 from PIL import Image, ImageTk
 from tkinter.ttk import *
-
+from time import strftime
 
 
 Garums = 700
@@ -37,4 +37,18 @@ def animacija(angle=0, direction=1):
     
     logs.after(50, animacija, new_angle, direction)
 
+#izveido pūlksteni kas rāda laiku
+def update_time():
+    global string
+    string = strftime('%H:%M:%S')
+    lbl.config(text=string)
+    lbl.after(1000, update_time)
+    
+lbl = Label(canva, font=('calibri', 40, 'bold'),
+            background='white',
+            foreground='black')
+
+lbl.place(x=220, y=580)
+
+update_time()
 canva.mainloop()
