@@ -12,12 +12,12 @@ logs.title("Skolas zvans")
 canva = Canvas(logs, width=Platums, height=Garums, bg="white")
 canva.pack()
 
-#zvans bilde
+# zvans bilde
 image_zvans = Image.open("zvans.png")
 tkimage = ImageTk.PhotoImage(image_zvans)
 image_izvada = canva.create_image(280, 250, image=tkimage)
 
-#zvana animacija
+# zvana animacija
 def animacija(angle=0, direction=1):
     global tkimage
     
@@ -37,7 +37,7 @@ def animacija(angle=0, direction=1):
     
     logs.after(50, animacija, new_angle, direction)
 
-#izveido pūlksteni kas rāda laiku
+# izveido pūlksteni kas rāda laiku
 def update_time():
     global string
     string = strftime('%H:%M:%S')
@@ -52,47 +52,40 @@ lbl.place(x=220, y=580)
 
 def audio():
     playsound.playsound("zvans.mp3")
-    
 
+# Track the last time the audio was played to prevent multiple plays within the same period
+last_played = ""
 
 def stundu_zvans():
+    global last_played
     string = strftime('%H:%M:%S')
-    if string <= "08:00" or string >="16:31":
-        pass
-    elif string <= "08:10" or string >= "08:50":
-        audio()
-    elif string <="9:10" or string >="9:50":
-        audio()
-    elif string <="10:00" or string >="10:40":
-        audio()
-    elif string <="10:50" or string >="11:30":
-        audio()
-    elif string <="11:40" or string >="12:20":
-        audio()
-    elif string <="12:30" or string >="13:10":
-        audio()
-    elif string <="13:20" or string >="14:00":
-        audio()
-    elif string <="14:10" or string >="14:50":
-        audio()
-    elif string <="15:00" or string >="15:40":
-        audio()
-    elif string <="15:50" or string >="16:30":
-        audio()
-    
+    play_times = {
+        "08:10:00": "1",
+        "09:10:00": "2",
+        "10:00:00": "3",
+        "10:50:00": "4",
+        "11:40:00": "5",
+        "12:30:00": "6",
+        "13:20:00": "7",
+        "14:10:00": "8",
+        "15:00:00": "9",
+        "15:50:00": "10"
+    }
 
-i=0
+    if string in play_times and string != last_played:
+        audio()
+        print(play_times[string])
+        last_played = string
+
+i = 0
 def check_time():
-    global i, stundu_zvans
-    if i < 3:
-        stundu_zvans()
-        i+=1
-        logs.after(1000, check_time)
-    else:
-        pass
+    global i
+    stundu_zvans()
+    i += 1
+    logs.after(1000, check_time)
 
 update_time()
 logs.after(1000, check_time)
-if i > 0 and i<4:
+if i > 0 and i < 4:
     animacija()
 logs.mainloop()
