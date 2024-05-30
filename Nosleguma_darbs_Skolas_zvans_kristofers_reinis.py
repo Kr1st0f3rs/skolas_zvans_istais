@@ -50,10 +50,11 @@ lbl = Label(canva, font=('calibri', 40, 'bold'),
 
 lbl.place(x=220, y=580)
 
+#zvana skaņa
 def audio():
     playsound.playsound("zvans.mp3")
 
-# Track the last time the audio was played to prevent multiple plays within the same period
+#Spēlē zvana audio stundu sākumos un beigās
 last_played = ""
 
 def stundu_zvans():
@@ -83,6 +84,7 @@ def check_time():
     stundu_zvans()
     i += 1
     logs.after(1000, check_time)
+
 
 update_time()
 logs.after(1000, check_time)
